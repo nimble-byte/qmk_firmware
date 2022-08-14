@@ -19,8 +19,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // helper macro gracefully stolen from qmk_firmware/users/gourdo1/gourdo1.h
 #define ARRAYSIZE(arr) sizeof(arr) / sizeof(arr[0])
 
-// define additional colors
-
 #ifdef RGB_MATRIX_ENABLE
     #define RGB_DISABLE_WHEN_USB_SUSPENDED
 

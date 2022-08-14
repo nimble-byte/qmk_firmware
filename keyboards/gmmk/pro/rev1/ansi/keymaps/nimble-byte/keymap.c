@@ -19,10 +19,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "rgb_matrix_map.h"
 
 // Custom Layers
-enum layers {
-    _BASE,
-    _FN,
-    _NUMPAD
+enum layers { _BASE, _FN, _NUMPAD };
+
+enum custom_keycodes {
+    FINDER = SAFE_RANGE, // actually PowerToys Run, but does not matter
+    EMO_SHR,             // `\_("/)_/`
+    EMO_SAD,             // :'-(
+    EMO_CON,             // (^o^)
+    EMO_CRY,             // (T_T)
 };
 
 #define TG_NUM TG(_NUMPAD)
@@ -60,11 +64,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_FN] = LAYOUT(
         EE_CLR,  _______, _______, _______, _______, KC_MPRV, KC_MNXT, KC_MPLY, KC_MSTP, KC_MUTE, KC_VOLD, KC_VOLU, _______, KC_END,           KC_MPLY,
-        _______, RGB_TOG, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,          _______,
+        _______, EMO_SHR, EMO_SAD, EMO_CON, EMO_CRY, _______, _______, _______, _______, _______, _______, _______, _______, _______,          _______,
         _______, RGB_SAD, RGB_VAI, RGB_SAI, NK_TOGG, _______, _______, _______, _______, _______,  TG_NUM, _______, _______, QK_BOOT,          _______,
         KC_CAPS, RGB_HUD, RGB_VAD, RGB_HUI, _______, _______, _______, _______, _______, _______, _______, _______,          _______,          _______,
         _______,          _______, _______, _______, _______, _______, KC_NLCK, _______, _______, _______, _______,          _______, RGB_MOD, _______,
-        _______, _______, _______,                            KC_MPLY,                            _______, _______, _______, RGB_SPD, RGB_RMOD, RGB_SPI
+        RGB_TOG, _______, _______,                            KC_MPLY,                            _______, _______, _______, RGB_SPD, RGB_RMOD, RGB_SPI
     ),
 
     [_NUMPAD] = LAYOUT(
@@ -87,6 +91,38 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 };
 // clang-format on
+
+bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case EMO_SHR:
+            if (record->event.pressed)
+                send_string("\\_(\"/)_/");
+            else
+                unregister_code16(keycode);
+            break;
+        case EMO_CRY:
+            if (record->event.pressed)
+                send_string("(T_T)");
+            else
+                unregister_code16(keycode);
+            break;
+        case EMO_CON:
+            if (record->event.pressed)
+                send_string("(o.O)");
+            else
+                unregister_code16(keycode);
+            break;
+        case EMO_SAD:
+            if (record->event.pressed)
+                send_string(":'-(");
+            else
+                unregister_code16(keycode);
+            break;
+        default:
+            break;
+    }
+    return true;
+}
 
 #ifdef ENCODER_ENABLE
 bool encoder_update_user(uint8_t index, bool clockwise) {
@@ -128,7 +164,7 @@ void rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
     }
 
     // LEDs are always blocked in rows, because I think about them that way
-    switch(get_highest_layer(layer_state)) {
+    switch (get_highest_layer(layer_state)) {
         case _FN:
             rgb_matrix_set_color(LED_ESC, RGB_DMAGENTA);
             rgb_matrix_set_color(LED_F5, RGB_DMAGENTA);
@@ -141,6 +177,9 @@ void rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
             rgb_matrix_set_color(LED_HOME, RGB_DMAGENTA);
 
             rgb_matrix_set_color(LED_1, RGB_DMAGENTA);
+            rgb_matrix_set_color(LED_2, RGB_DMAGENTA);
+            rgb_matrix_set_color(LED_3, RGB_DMAGENTA);
+            rgb_matrix_set_color(LED_4, RGB_DMAGENTA);
 
             rgb_matrix_set_color(LED_Q, RGB_DMAGENTA);
             rgb_matrix_set_color(LED_W, RGB_DMAGENTA);
@@ -148,7 +187,6 @@ void rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
             rgb_matrix_set_color(LED_R, RGB_DMAGENTA);
             rgb_matrix_set_color(LED_P, RGB_DMAGENTA);
             rgb_matrix_set_color(LED_BSLS, RGB_DMAGENTA);
-
 
             rgb_matrix_set_color(LED_CAPS, RGB_DMAGENTA);
             rgb_matrix_set_color(LED_A, RGB_DMAGENTA);
@@ -158,6 +196,7 @@ void rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
             rgb_matrix_set_color(LED_N, RGB_DMAGENTA);
             rgb_matrix_set_color(LED_UP, RGB_DMAGENTA);
 
+            rgb_matrix_set_color(LED_LCTL, RGB_DMAGENTA);
             rgb_matrix_set_color(LED_SPC, RGB_DMAGENTA);
             rgb_matrix_set_color(LED_LEFT, RGB_DMAGENTA);
             rgb_matrix_set_color(LED_DOWN, RGB_DMAGENTA);
