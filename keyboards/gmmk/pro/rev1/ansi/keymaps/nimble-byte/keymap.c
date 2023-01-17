@@ -67,7 +67,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, EMO_SHR, EMO_SAD, EMO_CON, EMO_CRY, _______, _______, _______, _______, _______, _______, _______, _______, _______,          _______,
         _______, RGB_SAD, RGB_VAI, RGB_SAI, NK_TOGG, _______, _______, _______, _______, _______,  TG_NUM, _______, _______, QK_BOOT,          _______,
         KC_CAPS, RGB_HUD, RGB_VAD, RGB_HUI, _______, _______, _______, _______, _______, _______, _______, _______,          _______,          _______,
-        _______,          _______, _______, _______, _______, _______, KC_NLCK, _______, _______, _______, _______,          _______, RGB_MOD, _______,
+        _______,          _______, _______, _______, _______, _______,  KC_NUM, _______, _______, _______, _______,          _______, RGB_MOD, _______,
         RGB_TOG, _______, _______,                            KC_MPLY,                            _______, _______, _______, RGB_SPD, RGB_RMOD, RGB_SPI
     ),
 
@@ -144,7 +144,7 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
 #endif // ENCODER_ENABLE
 
 #ifdef RGB_MATRIX_ENABLE
-void rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
+bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
     if (IS_HOST_LED_ON(USB_LED_CAPS_LOCK)) {
         // TODO: find proper way to invert the current color
         for (uint8_t i = 0; i < ARRAYSIZE(LED_SIDES_UPPER); i++) {
@@ -211,5 +211,6 @@ void rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
             // rgb_matrix_set_color(LED_F3, RGB_DMAGENTA);
             break;
     }
+    return false;
 }
 #endif // RGB_MATRIX_ENABLE

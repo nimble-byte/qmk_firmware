@@ -22,11 +22,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #ifdef RGB_MATRIX_ENABLE
     #define RGB_DISABLE_WHEN_USB_SUSPENDED
 
-    #define RGB_MATRIX_STARTUP_MODE RGB_MATRIX_SOLID_COLOR
-    #define RGB_MATRIX_STARTUP_HUE 132
-    #define RGB_MATRIX_STARTUP_SAT 255
-    #define RGB_MATRIX_STARTUP_VAL 255
-    #define RGB_MATRIX_STARTUP_SPD 120
+    #define RGB_MATRIX_DEFAULT_MODE RGB_MATRIX_SOLID_COLOR
+    #define RGB_MATRIX_DEFAULT_HUE 132
+    #define RGB_MATRIX_DEFAULT_SAT 255
+    #define RGB_MATRIX_DEFAULT_VAL 255
+    #define RGB_MATRIX_DEFAULT_SPD 120
 
     #undef ENABLE_RGB_MATRIX_ALPHAS_MODS                // Static dual hue, speed is hue for secondary hue
     // #undef ENABLE_RGB_MATRIX_GRADIENT_UP_DOWN           // Static gradient top to bottom, speed controls how much gradient changes
