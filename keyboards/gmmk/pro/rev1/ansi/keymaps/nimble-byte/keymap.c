@@ -145,7 +145,8 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
 
 #ifdef RGB_MATRIX_ENABLE
 bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
-    if (IS_HOST_LED_ON(USB_LED_CAPS_LOCK)) {
+    led_t led_state = host_keyboard_led_state();
+    if (led_state.caps_lock) {
         // TODO: find proper way to invert the current color
         for (uint8_t i = 0; i < ARRAYSIZE(LED_SIDES_UPPER); i++) {
             rgb_matrix_set_color(LED_SIDES_UPPER[i], RGB_BORDEAUX);
@@ -155,7 +156,7 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
     }
 
     // light up sides in dark red, if numlock is OFF
-    if (!IS_HOST_LED_ON(USB_LED_NUM_LOCK)) {
+    if (!led_state.num_lock) {
         for (uint8_t i = 0; i < ARRAYSIZE(LED_SIDES_LOWER); i++) {
             rgb_matrix_set_color(LED_SIDES_LOWER[i], RGB_BORDEAUX);
         }
